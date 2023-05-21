@@ -34,4 +34,7 @@ struct ObjectMother
     std::get<INDEX>(ret.arg) = newValue;
     return ret;
   }
+
+  operator RET () const
+  {return get();}
 };

@@ -120,3 +120,16 @@ TEST(ctor, multiple_int_and_something_that_not_an_int)
 
 }
 
+TEST(automatic_conversion, get_not_needed)
+{
+  struct Ret{
+    Ret() = default;
+  };
+
+  struct Foo : ObjectMother<Foo, Ret>
+  {
+  } foo;
+
+  auto f = [](Ret){};
+  f(foo); // should compile because foo is automatically converted to Ret;
+}
