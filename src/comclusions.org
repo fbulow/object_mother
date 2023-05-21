@@ -1,0 +1,16 @@
+* CRC or you can't add wValue(...)
+  - w(...) must return inherrited class
+
+* Is A::Type() Function or class?
+  - If class, then constructors have to be written
+    - Zero values ctor for calling must exist
+    - Either:
+      - Initialization is done an extra time when copying or...
+      - copy constructor is needed or initialization is done with
+        _every_ .w(...) just to be immediately discarded.
+      - Rule of five....
+  - If function, then
+    - Rule of zero class
+    - Still CRC.
+      
+ 
