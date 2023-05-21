@@ -26,4 +26,12 @@ struct ObjectMother
     std::get<TO_SET>(ret.arg) = newValue;
     return ret;
   }
+
+  template<int INDEX, class TO_SET>
+  AA w(TO_SET const & newValue) const
+  {
+    auto ret = clone();
+    std::get<INDEX>(ret.arg) = newValue;
+    return ret;
+  }
 };

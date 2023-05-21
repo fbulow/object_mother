@@ -54,3 +54,31 @@ TEST(ctor, single_int_arg)
 }
 
 
+TEST(ctor, multiple_int_arg)
+{
+  struct Ret{
+    int val;
+    Ret( int i, int j ):val(10*i+j){}
+  };
+
+  auto Foo = []()
+  {
+    struct Foo_ : ObjectMother<Foo_, Ret, int, int>
+    {
+    } ret;
+
+    std::get<0>(ret.arg) = 1;
+    std::get<1>(ret.arg) = 2;
+
+    return ret;
+  };
+
+
+  auto sut = Foo();
+
+  EXPECT_EQ(sut.get().val, 12);
+  //EXPECT_EQ(sut.w(5).get().val, 52); //Should not compile since there are several int arguments
+  EXPECT_EQ(sut.w<0>(5).get().val, 52);
+  EXPECT_EQ(sut.w<1>(5).get().val, 15);
+
+}
