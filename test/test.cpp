@@ -65,12 +65,16 @@ TEST(ctor, multiple_int_arg)
   {
     struct Foo_ : ObjectMother<Foo_, Ret, int, int>
     {
+      auto wFirst(int first)
+      {
+	return w<0>(first);
+      }
+      auto wSecond(int first)
+      {
+	return w<1>(first);
+      }
     } ret;
-
-    std::get<0>(ret.arg) = 1;
-    std::get<1>(ret.arg) = 2;
-
-    return ret;
+    return ret.wFirst(1).wSecond(2);
   };
 
 
@@ -81,4 +85,38 @@ TEST(ctor, multiple_int_arg)
   EXPECT_EQ(sut.w<0>(5).get().val, 52);
   EXPECT_EQ(sut.w<1>(5).get().val, 15);
 
+  EXPECT_EQ(sut.wFirst(5).get().val, 52);//Named argument
+
 }
+
+TEST(ctor, multiple_int_and_something_that_not_an_int)
+{
+  struct Ret{
+    int val;
+    Ret( int i, int j, bool addFive):val(10*i+j + (addFive?5:0)){}
+  };
+
+  auto Foo = []()
+  {
+    struct Foo_ : ObjectMother<Foo_, Ret, int, int, bool>
+    {
+      auto wFirst(int first)
+      {
+	return w<0>(first);
+      }
+      auto wSecond(int first)
+      {
+	return w<1>(first);
+      }
+    } ret;
+    return ret.wFirst(0).wSecond(0).w(false);
+  };
+
+
+  auto sut = Foo();
+
+  EXPECT_EQ(sut.w(true).get().val, 5);
+  EXPECT_EQ(sut.w(false).get().val, 0);
+
+}
+
