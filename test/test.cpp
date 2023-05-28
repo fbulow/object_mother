@@ -133,3 +133,35 @@ TEST(automatic_conversion, get_not_needed)
   auto f = [](Ret){};
   f(foo); // should compile because foo is automatically converted to Ret;
 }
+
+TEST(ctor, default_arguments_with_form_tuple)
+{
+  struct Ret{
+    int val;
+    Ret( int i, int j ):val(10*i+j){}
+  };
+
+  auto Foo = []()
+  {
+    struct Foo_ : ObjectMother<Foo_, Ret, int, int>
+    {
+      auto wFirst(int first)
+      {
+	return w<0>(first);
+      }
+      auto wSecond(int first)
+      {
+	return w<1>(first);
+      }
+    };
+    return Foo_::from_tuple(1,2);
+  };
+
+  auto sut = Foo();
+
+  EXPECT_EQ(sut.get().val, 12);
+  EXPECT_EQ(sut.w<0>(5).get().val, 52);
+  EXPECT_EQ(sut.w<1>(5).get().val, 15);
+
+  EXPECT_EQ(sut.wFirst(5).get().val, 52);//Named argument
+}

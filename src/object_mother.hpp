@@ -60,4 +60,10 @@ struct ObjectMother
 
   operator RET () const
   {return get();}
+
+  template<class ... X>
+  static AA from_tuple(X...a)
+  {
+    return {Arguments{a...}};
+  }
 };
