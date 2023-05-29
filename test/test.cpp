@@ -154,7 +154,7 @@ TEST(ctor, default_arguments_with_form_tuple)
 	return w<1>(first);
       }
     };
-    return Foo_::from_tuple(1,2);
+    return Foo_::defaultValues(1,2);
   };
 
   auto sut = Foo();

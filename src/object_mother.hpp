@@ -62,7 +62,7 @@ struct ObjectMother
   {return get();}
 
   template<class ... X>
-  static AA from_tuple(X...a)
+  static AA defaultValues(X...a)
   {
     return {Arguments{a...}};
   }
