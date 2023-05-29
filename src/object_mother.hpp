@@ -37,9 +37,7 @@ struct ObjectMother
 
   AA clone() const
   {
-    AA ret;
-    ret.arg = arg;
-    return ret;
+    return {arg};
   }
   
   template<class TO_SET>
