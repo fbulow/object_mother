@@ -1,5 +1,5 @@
 * CRC or you can't add wValue(...)
-  - w(...) must return inherrited class
+  - w(...) must return inherriting class
 
 * Is A::Type() Function or class?
   - If class, then constructors have to be written
@@ -12,5 +12,5 @@
   - If function, then
     - Rule of zero class
     - Still CRC.
-      
- 
+
+
