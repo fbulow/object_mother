@@ -30,18 +30,18 @@ struct ObjectMother
   using Arguments = std::tuple<ARG...>;
   Arguments arg;
 
-  RET get() const
+  [[nodiscard]] RET get() const
   {
     return std::make_from_tuple<RET>(arg);
   }
 
-  AA clone() const
+  [[nodiscard]] AA clone() const
   {
     return {arg};
   }
   
   template<class TO_SET>
-  AA w(TO_SET const & newValue) const
+  [[nodiscard]] AA w(TO_SET const & newValue) const
   {
     auto ret = clone();
     std::get<TO_SET>(ret.arg) = newValue;
@@ -49,18 +49,18 @@ struct ObjectMother
   }
 
   template<int INDEX, class TO_SET>
-  AA w(TO_SET const & newValue) const
+  [[nodiscard]] AA w(TO_SET const & newValue) const
   {
     auto ret = clone();
     std::get<INDEX>(ret.arg) = newValue;
     return ret;
   }
 
-  operator RET () const
+  [[nodiscard]] operator RET () const
   {return get();}
 
   template<class ... X>
-  static AA defaultValues(X...a)
+  [[nodiscard]] static AA defaultValues(X...a)
   {
     return {Arguments{a...}};
   }

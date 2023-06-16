@@ -145,11 +145,11 @@ TEST(ctor, default_arguments_with_form_tuple)
   {
     struct Foo_ : ObjectMother<Foo_, Ret, int, int>
     {
-      auto wFirst(int first)
+      [[nodiscard]] auto wFirst(int first)
       {
 	return w<0>(first);
       }
-      auto wSecond(int first)
+      [[nodiscard]] auto wSecond(int first)
       {
 	return w<1>(first);
       }
